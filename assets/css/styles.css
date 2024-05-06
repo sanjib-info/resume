@@ -487,41 +487,43 @@ input[type=submit]:hover{
     background-color: var(--first-color);
 }
 
-.skills__html{
+.skills95{
+    width: 95%;
+}
+.skills90{
     width: 90%;
 }
-.skills__css{
-    width: 80%;
-}
-.skills__js{
-    width: 60%;
-}
-.skills__react{
+.skills85{
     width: 85%;
 }
-
-.skills__php{
+.skills80{
     width: 80%;
 }
-.skills__node{
+.skills75{
+    width: 75%;
+}
+.skills70{
     width: 70%;
 }
-.skills__firebase{
-    width: 90%;
+.skills65{
+    width: 65%;
 }
-.skills__python{
+.skills60{
+    width: 60%;
+}
+.skills55{
     width: 55%;
 }
+.skills50{
+    width: 50%;
+}
+.skills45{
+    width: 45%;
+}
+.skills40{
+    width: 40%;
+}
 
-.skills__figma{
-    width: 90%;
-}
-.skills__sketch{
-    width: 80%;
-}
-.skills__photoshop{
-    width: 85%;
-}
 
 .skills__close .skills__list{
     height: 0;
