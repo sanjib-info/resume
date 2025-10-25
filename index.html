@@ -629,246 +629,238 @@
 
             </section>
 
-            <section class="portfolio section" id="portfolio">
-  <h2 class="section__title">Portfolio</h2>
-  <span class="section__subtitle">Most recent work</span>
-
-  <div class="portfolio__container container">
-    <!-- Cards will be injected here -->
-    <div id="portfolio-list" class="grid" style="row-gap: 2rem;"></div>
-
-    <!-- Pagination -->
-    <div id="portfolio-pagination" class="portfolio__pagination" style="display:flex;gap:.5rem;align-items:center;justify-content:center;margin-top:2rem;flex-wrap:wrap;"></div>
-  </div>
-
-  <script>
-    (function () {
-      // ====== 1) ADD/EDIT YOUR PROJECTS HERE (30+ supported) ======
-      const projects = [
-        {
-          title: "Clarion Computers",
-          img: "assets/img/Clarion.jpg",
-          url: "https://shop.clarioncomputers.in/",
-          desc: "Website adaptable to all devices with UI components and animated interaction."
-        },
-        {
-          title: "Victorian International School",
-          img: "assets/img/Victorian.jpg",
-          url: "http://victorianinternationalschool.com/",
-          desc: "Responsive school website with clean layouts and animations."
-        },
-        {
-          title: "IAHR",
-          img: "assets/img/Iahr.jpg",
-          url: "https://iahr.in/",
-          desc: "Modern organization site with accessible components."
-        },
-        {
-          title: "Beatzkraft",
-          img: "assets/img/Beatzkraft.jpg",
-          url: "https://beatzkraft.com/",
-          desc: "E-commerce friendly presentation with smooth UI."
-        },
-        {
-          title: "Gyanin Academy",
-          img: "assets/img/Gyanin.jpg",
-          url: "http://gyanin.academy/",
-          desc: "Education site optimized for readability and mobile."
-        },
-        // ===== Add more items below (copy structure) =====
-        // { title: "Project 6", img: "assets/img/your6.jpg", url: "https://...", desc: "Short description." },
-        // ...
-      ];
-
-      // ====== 2) SETTINGS ======
-      const ITEMS_PER_PAGE = 6; // change to 8/9/12 if you want
-      const listEl = document.getElementById("portfolio-list");
-      const paginationEl = document.getElementById("portfolio-pagination");
-      const sectionEl = document.getElementById("portfolio");
-
-      // ====== 3) RENDER HELPERS ======
-      function projectCardHTML(p) {
-        return `
-          <div class="portfolio__content grid" style="gap:1rem;">
-            <img src="${p.img}" alt="${p.title}" class="portfolio__img" loading="lazy">
-            <div class="portfolio__data">
-              <h3 class="portfolio__title">${p.title}</h3>
-              <p class="portfolio__description">${p.desc}</p>
-              <a href="${p.url}" target="_blank" rel="noopener" class="button button--flex button--small portfolio__button">
-                Visit
-                <i class="uil uil-arrow-right button__icon"></i>
-              </a>
-            </div>
-          </div>
-        `;
-      }
-
-      function renderPage(page) {
-        const totalPages = Math.max(1, Math.ceil(projects.length / ITEMS_PER_PAGE));
-        const current = Math.min(Math.max(1, page), totalPages);
-        const start = (current - 1) * ITEMS_PER_PAGE;
-        const slice = projects.slice(start, start + ITEMS_PER_PAGE);
-
-        // Render cards
-        listEl.innerHTML = slice.map(projectCardHTML).join("");
-
-        // Simple responsive grid (keeps your existing styles intact)
-        listEl.style.display = "grid";
-        listEl.style.gridTemplateColumns = "repeat(auto-fit, minmax(260px, 1fr))";
-
-        // Render pagination
-        renderPagination(totalPages, current);
-
-        // Smoothly bring user back to the top of the section after page change
-        sectionEl.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-
-      function renderPagination(totalPages, current) {
-        if (totalPages <= 1) {
-          paginationEl.innerHTML = "";
-          return;
-        }
-
-        const btn = (label, page, disabled = false, active = false) => `
-          <button
-            class="button button--flex button--small ${active ? 'button--white' : ''}"
-            data-page="${page}"
-            ${disabled ? 'disabled' : ''}
-            style="min-width:2.25rem;justify-content:center;${active ? 'font-weight:700;' : ''}"
-          >${label}</button>
-        `;
-
-        // Create a compact numeric pagination with prev/next
-        let html = "";
-        html += btn("«", current - 1, current === 1);
-
-        // Show first, ellipsis, window, ellipsis, last
-        const windowSize = 3; // numeric buttons around current
-        const start = Math.max(1, current - windowSize);
-        const end = Math.min(totalPages, current + windowSize);
-
-        if (start > 1) {
-          html += btn(1, 1, false, current === 1);
-          if (start > 2) html += `<span aria-hidden="true">…</span>`;
-        }
-
-        for (let i = start; i <= end; i++) {
-          html += btn(i, i, false, i === current);
-        }
-
-        if (end < totalPages) {
-          if (end < totalPages - 1) html += `<span aria-hidden="true">…</span>`;
-          html += btn(totalPages, totalPages, false, current === totalPages);
-        }
-
-        html += btn("»", current + 1, current === totalPages);
-        paginationEl.innerHTML = html;
-      }
-
-      // ====== 4) EVENTS (no page reload) ======
-      paginationEl.addEventListener("click", (e) => {
-        const target = e.target.closest("button[data-page]");
-        if (!target) return;
-        const page = parseInt(target.getAttribute("data-page"), 10);
-        if (!Number.isNaN(page)) renderPage(page);
-      });
-
-      // ====== 5) INITIAL RENDER ======
-      renderPage(1);
-    })();
-  </script>
-</section>
-
-
-            <!--==================== PORTFOLIO ====================-->
+            <!--==================== PROJECT SECTION ====================-->
             <section class="portfolio section" id="portfolio">
                 <h2 class="section__title">Portfolio</h2>
                 <span class="section__subtitle">Most recent work</span>
 
-                <div class="portfolio__container container swiper-container mySwiper">
-                    <div class="swiper-wrapper">
+                <style>
+                    /* Search input */
+                    #portfolio-search {
+                    display: block;
+                    width: 100%;
+                    max-width: 600px;
+                    margin: 1.2rem auto 2rem;
+                    padding: 0.75rem 1rem;
+                    border: 1px solid var(--text-color);
+                    border-radius: .5rem;
+                    background: var(--container-color);
+                    color: var(--title-color);
+                    font-size: var(--normal-font-size);
+                    outline: none;
+                    transition: 0.3s;
+                    }
+                    #portfolio-search:focus {
+                    border-color: var(--title-color);
+                    }
+                    #portfolio-search::placeholder {
+                    color: var(--text-color);
+                    opacity: .7;
+                    }
 
-                        <!--==================== PORTFOLIO 1 ====================-->
-                        <div class="portfolio__content grid swiper-slide">
-                            <img src="assets/img/Clarion.jpg" alt="" class="portfolio__img">
+                    /* Grid layout */
+                    #portfolio-list {
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+                    gap: 2rem;
+                    }
 
-                            <div class="portfolio__data">
-                                <h3 class="portfolio__title">Clarion Computers</h3>
-                                <p class="portfolio__description">Website adaptable to all device with ui components and anumated interaction.</p>
-                                <a href="https://shop.clarioncomputers.in/" class="button button--flex button--small portfolio__button">
-                                    Visit
-                                    <i class="uil uil-arrow-right button__icon"></i>
-                                </a>
-                            </div>
-                        </div>
+                    /* Card style */
+                    .portfolio__card {
+                    display: flex;
+                    flex-direction: column;
+                    text-align: center;
+                    border-radius: 0.75rem;
+                    overflow: hidden;
+                    max-width: 300px;
+                    min-width: 300px;
+                    transition: transform 0.3s, box-shadow 0.3s;
+                    background: var(--container-color);
+                    }
 
-                        <!--==================== PORTFOLIO 2 ====================-->
-                        <div class="portfolio__content grid swiper-slide">
-                            <img src="assets/img/Victorian.jpg" alt="" class="portfolio__img">
+                    .portfolio__card:hover {
+                    transform: translateY(-4px);
+                    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+                    }
 
-                            <div class="portfolio__data">
-                                <h3 class="portfolio__title">Victorian International School</h3>
-                                <p class="portfolio__description">Website adaptable to all device with ui components and anumated interaction.</p>
-                                <a href="http://victorianinternationalschool.com/" class="button button--flex button--small portfolio__button">
-                                    Visit
-                                    <i class="uil uil-arrow-right button__icon"></i>
-                                </a>
-                            </div>
-                        </div>
+                    .portfolio__data{
+                        padding: 15px 0;
+                    }
 
-                        <!--==================== PORTFOLIO 3 ====================-->
-                        <div class="portfolio__content grid swiper-slide">
-                            <img src="assets/img/Iahr.jpg" alt="" class="portfolio__img">
+                    .portfolio__img {
+                    width: 100%;
+                    height: 180px;
+                    object-fit: cover;
+                    display: block;
+                    transition: opacity 0.3s;
+                    }
 
-                            <div class="portfolio__data">
-                                <h3 class="portfolio__title">IAHR</h3>
-                                <p class="portfolio__description">Website adaptable to all device with ui components and anumated interaction.</p>
-                                <a href="https://iahr.in/" class="button button--flex button--small portfolio__button">
-                                    Visit
-                                    <i class="uil uil-arrow-right button__icon"></i>
-                                </a>
-                            </div>
-                        </div>
+                    .portfolio__title {
+                    font-size: var(--normal-font-size);
+                    margin: 1rem 0 0.5rem;
+                    color: var(--title-color);
+                    font-weight: 600;
+                    transition: color 0.3s;
+                    }
 
-                        <!--==================== PORTFOLIO 4 ====================-->
-                        <div class="portfolio__content grid swiper-slide">
-                            <img src="assets/img/Beatzkraft.jpg" alt="" class="portfolio__img">
+                    .portfolio__title:hover {
+                    color: var(--first-color);
+                    }
 
-                            <div class="portfolio__data">
-                                <h3 class="portfolio__title">Beatzkraft</h3>
-                                <p class="portfolio__description">Website adaptable to all device with ui components and anumated interaction.</p>
-                                <a href="https://beatzkraft.com/" class="button button--flex button--small portfolio__button">
-                                    Visit
-                                    <i class="uil uil-arrow-right button__icon"></i>
-                                </a>
-                            </div>
-                        </div>
+                    .portfolio__description {
+                    padding: 0 1rem 1rem;
+                    font-size: var(--small-font-size);
+                    color: var(--text-color);
+                    }
 
-                        <!--==================== PORTFOLIO 5 ====================-->
-                        <div class="portfolio__content grid swiper-slide">
-                            <img src="assets/img/Gyanin.jpg" alt="" class="portfolio__img">
+                    /* Pagination */
+                    .portfolio__pagination {
+                    display: flex;
+                    flex-wrap: wrap;
+                    gap: .5rem;
+                    align-items: center;
+                    justify-content: center;
+                    margin-top: 2rem;
+                    }
 
-                            <div class="portfolio__data">
-                                <h3 class="portfolio__title">Gyanin Academy</h3>
-                                <p class="portfolio__description">Website adaptable to all device with ui components and anumated interaction.</p>
-                                <a href="http://gyanin.academy/" class="button button--flex button--small portfolio__button">
-                                    Visit
-                                    <i class="uil uil-arrow-right button__icon"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Add Arrows -->
-                    <div class="swiper-button-next">
-                        <i class="uil uil-angle-right-b swiper-portfolio-icon"></i>
-                    </div>
-                    <div class="swiper-button-prev">
-                        <i class="uil uil-angle-left-b swiper-portfolio-icon"></i>
-                    </div>
-                    <!-- Add Pagination -->
-                    <div class="swiper-pagination"></div>
+                    .pager__btn {
+                    min-width: 2.25rem;
+                    padding: .5rem .75rem;
+                    display: inline-flex;
+                    align-items: center;
+                    justify-content: center;
+                    border: 1px solid var(--text-color);
+                    background: transparent;
+                    color: var(--title-color);
+                    border-radius: .5rem;
+                    cursor: pointer;
+                    transition: transform .15s ease;
+                    }
+                    .pager__btn[disabled] { opacity: .5; cursor: not-allowed; }
+                    .pager__btn:active { transform: scale(.97); }
+                    .pager__btn--active {
+                    background: var(--container-color);
+                    border-color: var(--container-color);
+                    font-weight: 700;
+                    }
+                    .pager__gap { padding: 0 .25rem; user-select: none; color: var(--text-color); }
+
+                    .portfolio__empty {
+                    text-align: center;
+                    color: var(--text-color);
+                    padding: 2rem 1rem;
+                    border: 1px dashed var(--text-color);
+                    border-radius: .75rem;
+                    }
+                </style>
+
+                <div class="container">
+                    <!-- Search -->
+                    <input id="portfolio-search" type="search" placeholder="Search projects..." aria-label="Search portfolio">
+
+                    <!-- Project Grid -->
+                    <div id="portfolio-list"></div>
+
+                    <!-- Pagination -->
+                    <div id="portfolio-pagination" class="portfolio__pagination"></div>
                 </div>
+
+                <script>
+                    (function () {
+                    const projects = [
+                        { title: "Clarion Computers", img: "assets/img/Clarion.jpg", url: "https://shop.clarioncomputers.in/", desc: "" },
+                        { title: "Victorian International School", img: "assets/img/Victorian.jpg", url: "http://victorianinternationalschool.com/", desc: "" },
+                        { title: "IAHR", img: "assets/img/Iahr.jpg", url: "https://iahr.in/", desc: "" },
+                        { title: "Beatzkraft", img: "assets/img/Beatzkraft.jpg", url: "https://beatzkraft.com/", desc: "" },
+                        { title: "Gyanin Academy", img: "assets/img/Gyanin.jpg", url: "http://gyanin.academy/", desc: "" },
+                        // Add the rest of your 30+ projects here
+                    ];
+
+                    const listEl = document.getElementById("portfolio-list");
+                    const paginationEl = document.getElementById("portfolio-pagination");
+                    const searchEl = document.getElementById("portfolio-search");
+                    const sectionEl = document.getElementById("portfolio");
+
+                    const ITEMS_PER_PAGE = 9;
+                    let state = { page: 1, query: "" };
+
+                    const matches = (p, q) =>
+                        p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
+
+                    function getFiltered() {
+                        const q = state.query.toLowerCase();
+                        return q ? projects.filter(p => matches(p, q)) : projects;
+                    }
+
+                    function cardHTML(p) {
+                        return `
+                        <div class="portfolio__card">
+                            <a href="${p.url}" target="_blank" rel="noopener">
+                            <img src="${p.img}" alt="${p.title}" class="portfolio__img" loading="lazy">
+                            </a>
+                            <div class="portfolio__data">
+                            <a href="${p.url}" target="_blank" rel="noopener" class="portfolio__title">${p.title}</a>
+                            </div>
+                        </div>
+                        `;
+                    }
+
+                    function render() {
+                        const filtered = getFiltered();
+                        const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+                        const current = Math.min(Math.max(1, state.page), totalPages);
+                        const start = (current - 1) * ITEMS_PER_PAGE;
+                        const items = filtered.slice(start, start + ITEMS_PER_PAGE);
+
+                        listEl.innerHTML = items.length
+                        ? items.map(cardHTML).join("")
+                        : `<div class="portfolio__empty">No projects found.</div>`;
+
+                        renderPager(totalPages, current);
+
+                        if (state._didInit)
+                        sectionEl.scrollIntoView({ behavior: "smooth", block: "start" });
+                        else state._didInit = true;
+                    }
+
+                    function renderPager(total, current) {
+                        if (total <= 1) { paginationEl.innerHTML = ""; return; }
+                        const btn = (label, page, { disabled=false, active=false } = {}) => `
+                        <button class="pager__btn ${active ? 'pager__btn--active' : ''}" data-page="${page}" ${disabled ? 'disabled' : ''}>${label}</button>
+                        `;
+                        let html = "";
+                        html += btn("«", current - 1, { disabled: current === 1 });
+                        const win = 3, start = Math.max(1, current - win), end = Math.min(total, current + win);
+                        if (start > 1) { html += btn(1, 1, { active: current === 1 }); if (start > 2) html += `<span class="pager__gap">…</span>`; }
+                        for (let i = start; i <= end; i++) html += btn(i, i, { active: i === current });
+                        if (end < total) { if (end < total - 1) html += `<span class="pager__gap">…</span>`; html += btn(total, total, { active: current === total }); }
+                        html += btn("»", current + 1, { disabled: current === total });
+                        paginationEl.innerHTML = html;
+                    }
+
+                    paginationEl.addEventListener("click", e => {
+                        const b = e.target.closest("button[data-page]");
+                        if (!b) return;
+                        const page = parseInt(b.getAttribute("data-page"), 10);
+                        if (!Number.isNaN(page)) { state.page = page; render(); }
+                    });
+
+                    let t;
+                    searchEl.addEventListener("input", () => {
+                        clearTimeout(t);
+                        t = setTimeout(() => {
+                        state.query = searchEl.value.trim();
+                        state.page = 1;
+                        render();
+                        }, 200);
+                    });
+
+                    render();
+                    })();
+                </script>
             </section>
+
+
 
             <!--==================== PROJECT IN MIND ====================-->
             <section class="project section">
@@ -1092,4 +1084,3 @@
         
     </body>
 </html>
-
