@@ -586,7 +586,7 @@
                         </div>
                     </div>
 
-                    <!--==================== SERVICES 3 ====================-->
+                    <!--==================== SERVICES ====================-->
                     <div class="services__content">
                         <div>
                             <i class="uil uil-pen services__icon"></i>
@@ -631,7 +631,7 @@
 
             <!--==================== PROJECT SECTION ====================-->
             <section class="portfolio section" id="portfolio">
-                <h2 class="section__title">Portfolio</h2>
+                <h2 id="portfolio_section_title" class="section__title">Portfolio</h2>
                 <span class="section__subtitle">Most recent work</span>
 
                 <div class="container">
@@ -684,7 +684,7 @@
                     const listEl = document.getElementById("portfolio-list");
                     const paginationEl = document.getElementById("portfolio-pagination");
                     const searchEl = document.getElementById("portfolio-search");
-                    const sectionEl = document.getElementById("portfolio");
+                    const sectionEl = document.getElementById("portfolio_section_title");
 
                     const ITEMS_PER_PAGE = 9;
                     let state = { page: 1, query: "" };
@@ -754,9 +754,9 @@
                     searchEl.addEventListener("input", () => {
                         clearTimeout(t);
                         t = setTimeout(() => {
-                        state.query = searchEl.value.trim();
-                        state.page = 1;
-                        render();
+                            state.query = searchEl.value.trim();
+                            state.page = 1;
+                            render();
                         }, 200);
                     });
 
@@ -990,4 +990,3 @@
         
     </body>
 </html>
-
