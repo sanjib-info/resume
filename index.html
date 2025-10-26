@@ -670,6 +670,17 @@
                         // Add the rest of your 30+ projects here
                     ];
 
+                    // Shuffle array (Fisher–Yates)
+                    function shuffle(array) {
+                    for (let i = array.length - 1; i > 0; i--) {
+                        const j = Math.floor(Math.random() * (i + 1));
+                        [array[i], array[j]] = [array[j], array[i]];
+                    }
+                        return array;
+                    }
+                    // Randomize project order once on page load
+                    shuffle(projects);
+
                     const listEl = document.getElementById("portfolio-list");
                     const paginationEl = document.getElementById("portfolio-pagination");
                     const searchEl = document.getElementById("portfolio-search");
@@ -979,3 +990,4 @@
         
     </body>
 </html>
+
