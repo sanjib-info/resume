@@ -691,10 +691,13 @@
                     }
 
                     function cardHTML(p) {
+                        const host = new URL(p.url).hostname.replace(/^www\./, "");
+                        const hue = [...host].reduce((a, c) => a + c.charCodeAt(0), 0) % 360;
                         return `
                         <div class="portfolio__card">
-                            <a href="${p.url}" target="_blank" rel="noopener">
-                            <img src="${p.img}" alt="${p.title}" class="portfolio__img" loading="lazy">
+                            <a href="${p.url}" target="_blank" rel="noopener" class="portfolio__media" style="--h:${hue};--h2:${(hue + 40) % 360}">
+                            <span class="portfolio__media-title" style="font-size:${Math.min(24, Math.floor(280 / (p.title.length * 0.6)))}px">${p.title}</span>
+                            <span class="portfolio__media-host">${host}</span>
                             </a>
                             <div class="portfolio__data">
                             <a href="${p.url}" target="_blank" rel="noopener" class="portfolio__title">${p.title}</a>
