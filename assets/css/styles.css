@@ -1713,3 +1713,34 @@ services__title{
         padding-bottom: 8rem;
     }
 }
+
+/*==================== QUALIFICATION ACTIVE TAB ====================*/
+.qualification__button.qualification__active{
+    color: var(--first-color);
+}
+
+/*==================== PORTFOLIO GRID COLUMNS ====================*/
+#portfolio-list{
+    grid-template-columns: 1fr;
+}
+
+@media screen and (min-width: 768px){
+    #portfolio-list{
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media screen and (min-width: 1024px){
+    #portfolio-list{
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/*==================== PORTFOLIO MAX WIDTH (DESKTOP ONLY) ====================*/
+@media screen and (min-width: 1024px){
+    .portfolio .container{
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
