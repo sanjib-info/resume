@@ -1678,3 +1678,31 @@ services__title{
         width: auto;
     }
 }
+
+/*==================== PORTFOLIO CSS GRADIENT TILES ====================*/
+.portfolio__media{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 180px;
+    padding: 1rem;
+    text-decoration: none;
+    color: #FFF;
+    text-align: center;
+    background: linear-gradient(135deg, hsl(var(--h), 65%, 55%), hsl(var(--h2), 70%, 35%));
+}
+
+.portfolio__media-title{
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    overflow-wrap: anywhere;
+    max-width: 100%;
+}
+
+.portfolio__media-host{
+    margin-top: .35rem;
+    font-size: .875rem;
+    opacity: .85;
+}
