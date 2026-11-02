@@ -139,7 +139,7 @@
                                 <span class="about__info-name">Years <br> experience</span>
                             </div>
                             <div>
-                                <span class="about__info-title">30+</span>
+                                <span class="about__info-title" id="completed-count">0+</span>
                                 <span class="about__info-name">Completed <br> Websites</span>
                             </div>
                             <div>
@@ -342,18 +342,66 @@
 
                 <div class="qualification__container container">
                     <div class="qualification__tabs">
-                        <div class="qualification__button button--flex qualification__active" data-target='#education'>
-                            <i class="uil uil-graduation-cap qualification__icon"></i>
-                            Education
-                        </div>
-                        <div class="qualification__button button--flex" data-target='#work'>
+                        <div class="qualification__button button--flex qualification__active" data-target='#work'>
                             <i class="uil uil-briefcase-alt qualification__icon"></i>
                             Work
                         </div>
+                        <div class="qualification__button button--flex" data-target='#education'>
+                            <i class="uil uil-graduation-cap qualification__icon"></i>
+                            Education
+                        </div>
+                        
                     </div>
                         <div class="qualification__sections">
                             <!--==================== QUALIFICATION  CONTENT 1 ====================-->
-                            <div class="qualification__content qualification__active" data-content id="education">
+                            <div class="qualification__content qualification__active" data-content id="work">
+                                <div class="qualification__data">
+                                    <div>
+                                        <h3 class="qualification__title">Sr. Associate Software Engineer</h3>
+                                        <span class="qualification__subtitle">T-WEB Exponent Services Pvt. Ltd.</span>
+                                        <div class="qualification__calendar">
+                                            <i class="uil uil-calendar-alt"></i>
+                                            September 2022 - Present
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="qualification__rounder"></span>
+                                        <span class="qualification__line"></span>
+                                    </div>
+                                </div>
+
+                                <div class="qualification__data">
+                                    <div></div>
+                                    <div>
+                                        <span class="qualification__rounder"></span>
+                                        <span class="qualification__line"></span>
+                                    </div>
+                                    <div>
+                                        <h3 class="qualification__title">Web & Data Analytics Intern</h3>
+                                        <span class="qualification__subtitle">Ardent Computech Pvt. Ltd.</span>
+                                        <div class="qualification__calendar">
+                                            <i class="uil uil-calendar-alt"></i>
+                                            March 2022 - June 2022
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="qualification__data">
+                                    <div>
+                                        <h3 class="qualification__title">Operations & Process Intern</h3>
+                                        <span class="qualification__subtitle">Flipkart Launchpad</span>
+                                        <div class="qualification__calendar">
+                                            <i class="uil uil-calendar-alt"></i>
+                                            September 2021 - October 2021
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <span class="qualification__rounder"></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--==================== QUALIFICATION  CONTENT 2 ====================-->
+                            <div class="qualification__content" data-content id="education">
                                 <div class="qualification__data">
                                     <div>
                                         <h3 class="qualification__title">Master of Computer Applications</h3>
@@ -400,53 +448,7 @@
                                 </div>
                             </div>
                             <!--==================== QUALIFICATION  CONTENT 2 ====================-->
-                            <div class="qualification__content" data-content id="work">
-                                <div class="qualification__data">
-                                    <div>
-                                        <h3 class="qualification__title">Sr. Associate Software Engineer</h3>
-                                        <span class="qualification__subtitle">T-WEB Exponent Services Pvt. Ltd.</span>
-                                        <div class="qualification__calendar">
-                                            <i class="uil uil-calendar-alt"></i>
-                                            September 2022 - Present
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span class="qualification__rounder"></span>
-                                        <span class="qualification__line"></span>
-                                    </div>
-                                </div>
-
-                                <div class="qualification__data">
-                                    <div></div>
-                                    <div>
-                                        <span class="qualification__rounder"></span>
-                                        <span class="qualification__line"></span>
-                                    </div>
-                                    <div>
-                                        <h3 class="qualification__title">Web & Data Analytics Intern</h3>
-                                        <span class="qualification__subtitle">Ardent Computech Pvt. Ltd.</span>
-                                        <div class="qualification__calendar">
-                                            <i class="uil uil-calendar-alt"></i>
-                                            March 2022 - June 2022
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="qualification__data">
-                                    <div>
-                                        <h3 class="qualification__title">Operations & Process Intern</h3>
-                                        <span class="qualification__subtitle">Flipkart Launchpad</span>
-                                        <div class="qualification__calendar">
-                                            <i class="uil uil-calendar-alt"></i>
-                                            September 2021 - October 2021
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <span class="qualification__rounder"></span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                                    </div>
                 </div>
             </section>
 
@@ -671,6 +673,9 @@
                     }
                         return array;
                     }
+                    // Completed websites count follows the number of projects in the list
+                    document.getElementById("completed-count").textContent = projects.length + "+";
+
                     // Randomize project order once on page load
                     shuffle(projects);
 
@@ -679,8 +684,19 @@
                     const searchEl = document.getElementById("portfolio-search");
                     const sectionEl = document.getElementById("portfolio_section_title");
 
-                    const ITEMS_PER_PAGE = 9;
+                    // Desktop 4x3 (12), tablet 3x3 (9), mobile 1x6 (6)
+                    const perPage = () => window.innerWidth >= 1024 ? 12 : window.innerWidth >= 768 ? 9 : 6;
+                    let lastPerPage = perPage();
                     let state = { page: 1, query: "" };
+
+                    // Re-paginate when the screen size crosses a breakpoint, without scrolling
+                    window.addEventListener("resize", () => {
+                        if (perPage() !== lastPerPage) {
+                            lastPerPage = perPage();
+                            state._didInit = false;
+                            render();
+                        }
+                    });
 
                     const matches = (p, q) =>
                         p.title.toLowerCase().includes(q) || p.desc.toLowerCase().includes(q);
@@ -708,10 +724,11 @@
 
                     function render() {
                         const filtered = getFiltered();
-                        const totalPages = Math.max(1, Math.ceil(filtered.length / ITEMS_PER_PAGE));
+                        const size = perPage();
+                        const totalPages = Math.max(1, Math.ceil(filtered.length / size));
                         const current = Math.min(Math.max(1, state.page), totalPages);
-                        const start = (current - 1) * ITEMS_PER_PAGE;
-                        const items = filtered.slice(start, start + ITEMS_PER_PAGE);
+                        const start = (current - 1) * size;
+                        const items = filtered.slice(start, start + size);
 
                         listEl.innerHTML = items.length
                         ? items.map(cardHTML).join("")
