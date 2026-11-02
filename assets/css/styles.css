@@ -917,7 +917,7 @@ services__title{
 .footer__copy{
     font-size: var(--smaller-font-size);
     text-align: center;
-    color: var(--text-color-light);
+    color: #FFF;
     margin-top: var(--mb-3);
 }
 
@@ -1003,6 +1003,17 @@ services__title{
     padding: 15px 0;
 }
 
+.portfolio__card{
+    min-height: 140px;
+    justify-content: center;
+    padding: 1.5rem 1rem;
+}
+
+.portfolio__card .portfolio__data{
+    padding: 0;
+    width: 100%;
+}
+
 .portfolio__img {
     width: 100%;
     height: 180px;
@@ -1013,10 +1024,14 @@ services__title{
 
 .portfolio__title {
     font-size: var(--normal-font-size);
-    margin: 1rem 0 0.5rem;
+    margin: 0;
     color: var(--title-color);
     font-weight: 600;
     transition: color 0.3s;
+    display: block;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    white-space: normal;
 }
 
 .portfolio__title:hover {
@@ -1450,5 +1465,216 @@ services__title{
     }
     .scrollup{
         right: 5rem;
+    }
+}
+
+/*==================== SECTION SLIDE UP ====================*/
+.js-reveal .section{
+    opacity: 0;
+    transform: translateY(60px);
+    transition: opacity .8s ease, transform .8s ease;
+}
+.js-reveal .section.is-visible{
+    opacity: 1;
+    transform: none;
+}
+
+@media (prefers-reduced-motion: reduce){
+    .js-reveal .section{
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/*==================== ITEM ANIMATIONS ====================*/
+.js-reveal .reveal-item{
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity .7s ease, transform .7s ease;
+}
+.js-reveal .section.is-visible .reveal-item{
+    opacity: 1;
+    transform: none;
+    transition-delay: var(--d, 0s);
+}
+
+.js-reveal .skills__percentage{
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 1.2s ease;
+}
+.js-reveal .section.is-visible .skills__percentage{
+    transform: scaleX(1);
+}
+
+/*==================== HOVER EFFECTS ====================*/
+.button{
+    transition: background-color .3s ease, transform .3s ease, box-shadow .3s ease;
+}
+.button:hover{
+    transform: translateY(-2px);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, .15);
+}
+
+.home__social-icon,
+.footer__social{
+    display: inline-block;
+    transition: transform .3s ease;
+}
+.home__social-icon:hover,
+.footer__social:hover{
+    transform: translateY(-3px);
+}
+
+.skills__icon{
+    transition: transform .3s ease;
+}
+.skills__header:hover .skills__icon{
+    transform: scale(1.15) rotate(-6deg);
+}
+
+.contact__icon{
+    transition: transform .3s ease;
+}
+.contact__information:hover .contact__icon{
+    transform: scale(1.15);
+}
+
+.qualification__rounder{
+    transition: transform .3s ease;
+}
+.qualification__data:hover .qualification__rounder{
+    transform: scale(1.4);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .js-reveal .reveal-item,
+    .js-reveal .skills__percentage{
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+    .button,
+    .home__social-icon,
+    .footer__social,
+    .skills__icon,
+    .contact__icon,
+    .qualification__rounder{
+        transition: none;
+    }
+    .button:hover,
+    .home__social-icon:hover,
+    .footer__social:hover,
+    .skills__header:hover .skills__icon,
+    .contact__information:hover .contact__icon,
+    .qualification__data:hover .qualification__rounder{
+        transform: none;
+    }
+}
+
+/*==================== PORTFOLIO CARD DESIGN ====================*/
+#portfolio-list{
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    max-width: none;
+    margin: 0;
+}
+
+.portfolio__card{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+    min-height: 0;
+    padding: 0;
+    border: none;
+    border-radius: .75rem;
+    overflow: hidden;
+    background: var(--container-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, .1);
+    text-align: center;
+    transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.portfolio__card::before,
+.portfolio__card::after{
+    content: none;
+    display: none;
+}
+
+.portfolio__card:hover{
+    transform: translateY(-4px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, .15);
+}
+
+.portfolio__card .portfolio__img{
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+    display: block;
+}
+
+.portfolio__card .portfolio__data{
+    padding: 1rem .75rem;
+    width: 100%;
+}
+
+.portfolio__title{
+    display: block;
+    margin: 0;
+    font-size: 1.05rem;
+    font-weight: 600;
+    line-height: 1.4;
+    color: var(--title-color);
+    overflow-wrap: anywhere;
+    word-break: break-word;
+}
+
+.portfolio__title:hover{
+    color: var(--first-color);
+}
+
+/*==================== PORTFOLIO CARD SCROLL ====================*/
+.js-reveal .portfolio__card{
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity .6s ease, transform .6s ease, box-shadow .3s ease;
+}
+
+.js-reveal .portfolio__card.is-visible{
+    opacity: 1;
+    transform: none;
+}
+
+.js-reveal .portfolio__card.is-visible:hover{
+    transform: translateY(-4px);
+}
+
+@media (prefers-reduced-motion: reduce){
+    .js-reveal .portfolio__card{
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+}
+
+/*==================== COMPACT HEADER (DESKTOP ONLY) ====================*/
+@media screen and (min-width: 768px){
+    .nav{
+        height: auto;
+        min-height: 85px;
+    }
+
+    .nav__logo{
+        padding: .15rem 0;
+    }
+
+    .nav__logo img{
+        height: 68px;
+        width: auto;
     }
 }
