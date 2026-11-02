@@ -1706,3 +1706,10 @@ services__title{
     font-size: .875rem;
     opacity: .85;
 }
+
+/*==================== MOBILE FOOTER SPACE ====================*/
+@media screen and (max-width: 767px){
+    .footer__bg{
+        padding-bottom: 8rem;
+    }
+}
